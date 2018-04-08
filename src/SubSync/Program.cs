@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using SubSync.Processors;
 
 namespace SubSync
 {
@@ -35,14 +34,14 @@ namespace SubSync
             var logger = new ConsoleLogger();
 
             var fallbackSubtitleProvider = new FallbackSubtitleProvider(
-                    //new OpenSubtitles(languages),
+                    //new OpenSubtitles(languages), // uncomment as soon as its been implemented
                     new Subscene(languages)
                 );
 
             var subSyncWorkerProvider = new WorkerProvider(logger, subtitleExtensions, fallbackSubtitleProvider);
             var subSyncWorkerQueue = new WorkerQueue(subSyncWorkerProvider);
 
-            using (var mediaWatcher = new FileSystemWatcher(logger, subSyncWorkerQueue, input, videoExtensions, subtitleExtensions))
+            using (var mediaWatcher = new SubtitleSynchronizer(logger, subSyncWorkerQueue, input, videoExtensions, subtitleExtensions))
             {
 
                 logger.WriteLine("╔═════════════════════════════════════════════════════╗");
@@ -58,7 +57,7 @@ namespace SubSync
                 logger.WriteLine("");
                 logger.WriteLine("  You may press @green@'q' @gray@at any time to quit.");
                 logger.WriteLine("");
-                logger.WriteLine(" ----------------------------------------------------------- ");
+                logger.WriteLine(" ───────────────────────────────────────────────────── ");
                 logger.WriteLine("");
 
                 mediaWatcher.Start();
