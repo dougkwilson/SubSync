@@ -13,7 +13,7 @@ namespace SubSync
         {
             var input = "./";
             var videoExtensions = ParseList("*.avi;*.mp4;*.mkv;*.mpeg;*.flv;*.webm");
-            var subtitleExtensions = ParseList("*.srt;*.txt;*.sub;*.idx;*.ssa");
+            var subtitleExtensions = ParseList("*.srt;*.txt;*.sub;*.idx;*.ssa;*.ass");
             var languages = ParseList("english");
 
             if (args.Length > 0 && !string.IsNullOrEmpty(args[0]))
